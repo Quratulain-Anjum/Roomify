@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roomify - Bedroom Furnishings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #171717;
+            --secondary-color: #f0f0f0;
+            --text-color: #333;
+            --light-color: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .top-bar {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            min-height: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .scrolling-text {
+            display: inline-block;
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: slide-left 15s linear infinite;
+        }
+
+        @keyframes slide-left {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .navbar {
+            background-color: var(--light-color);
+        }
+
+        .navbar-brand img {
+            height: 59px;
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .navbar .btn-outline-dark {
+            border-color: transparent;
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+        }
+
+        .navbar .btn-outline-dark:hover {
+            color: #888;
+        }
+
+        .offcanvas-body {
+            color: var(--primary-color);
+            padding: 20px;
+        }
+
+        .offcanvas-body .list-group-item {
+            border: none;
+            background-color: transparent;
+            font-weight: 500;
+            padding: 10px 0;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .offcanvas-body .list-group-item a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            color: var(--light-color);
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--light-color);
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-content .btn {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: 1px solid var(--light-color);
+            font-weight: 600;
+            padding: 10px 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .hero-content .btn:hover {
+            background-color: transparent;
+            color: var(--light-color);
+        }
+
+        h1.section-heading {
+            padding: 50px;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img-top {
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            color: var(--primary-color);
+        }
+
+        .btn-link-dark {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .btn-link-dark::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .btn-link-dark:hover::after {
+            transform: scaleX(1);
+        }
+
+        .section2 {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+        }
+
+        #about h2 {
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #about p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        .btn1 {
+            background-color: var(--primary-color);
+            height: 40px;
+            border-radius: 8px;
+            color: var(--light-color);
+            width: 150px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn1 a {
+            text-decoration: none;
+            color: var(--light-color);
+        }
+
+        .btn1:hover {
+            background-color: #888;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 28px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #1da851;
+            color: white;
+        }
+
+        .whatsapp-icon {
+            margin: 0;
+        }
+
+        /* Unique Footer Styles */
+        .unique-footer {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            padding: 60px 0 20px;
+        }
+
+        .unique-footer h5.footer-heading {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--light-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .unique-footer h5.footer-heading::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--light-color);
+        }
+
+        .unique-footer .text-white-50 {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .unique-footer .social-icons a {
+            color: var(--light-color);
+            font-size: 1.25rem;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .unique-footer .social-icons a:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .unique-footer .newsletter-form .form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light-color);
+        }
+
+        .unique-footer .newsletter-form .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .unique-footer .btn-subscribe {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .unique-footer .btn-subscribe:hover {
+            background-color: #ddd;
+        }
+
+        .unique-footer .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: block;
+            padding: 5px 0;
+        }
+
+        .unique-footer .footer-links a:hover {
+            color: var(--light-color);
+        }
+
+        .unique-footer .footer-hr {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-message {
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 15px;
+            justify-items: center;
+        }
+
+        .product-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow: hidden;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        @media (max-width: 992px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 260px;
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            top: 0;
+            left: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        .card-front img,
+        .card-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .card-front {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .card-back {
+            opacity: 0;
+            z-index: 2;
+        }
+
+        .product-card:hover .card-front {
+            opacity: 0;
+        }
+
+        .product-card:hover .card-back {
+            opacity: 1;
+        }
+
+        .product-card h3 {
+            margin: 10px 0 5px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .product-card p {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .add-btn {
+            background-color: #6d5d5d;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .add-btn:hover {
+            background-color: #3d1f1f;
+            box-shadow: 0 0 2px 1px rgba(156, 112, 112, 0.7);
+            /* Radiant gold glow */
+        }
+
+        .btn-cart {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+
+        .btn-cart:hover {
+            background-color: #555;
+        }
+
+        .cart-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-row img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-name {
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .cart-price {
+            width: 110px;
+            text-align: right;
+            color: #333;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .qty-controls button {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .line-subtotal {
+            width: 120px;
+            text-align: right;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .modal-right {
+            background: #fbfbfb;
+            padding: 18px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .cart-row {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px 0;
+                position: relative;
+            }
+
+            .cart-row img {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 10px;
+            }
+
+            .cart-name {
+                text-align: left;
+                font-size: 1.1em;
+                flex-grow: 0;
+                width: 100%;
+            }
+
+            .cart-price {
+                text-align: left;
+                width: auto;
+            }
+
+            .qty-controls {
+                align-self: flex-start;
+                margin-top: 10px;
+            }
+
+            .line-subtotal {
+                position: absolute;
+                top: 15px;
+                right: 10px;
+                font-size: 1.1em;
+                text-align: right;
+                width: auto;
+            }
+
+            .remove-item {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+
+        .unique-footer .footer-links i {
+            width: 15px;
+            text-align: center;
+        }
+
+        .unique-footer .footer-links li {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 8px;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 991.98px) {
+            #searchToggle {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="sticky-top bg-white shadow-sm">
+        <div class="top-bar text-white py-2 text-center small">
+            <div class="scrolling-text">
+                Delivery All Over Pakistan | Free Shipping on Orders Above PKR 100,000
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg py-3">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+                <button class="navbar-toggler me-3" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand mx-auto me-lg-0" href="index.html">
+                    <h5 class="footer-heading">Roomify</h5>
+                </a>
+                <ul class="navbar-nav d-none d-lg-flex flex-grow-1 justify-content-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Furniture</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="bedroom.html">Bed Room</a></li>
+                            <li><a class="dropdown-item" href="office1.html">Office Room</a></li>
+                            <li><a class="dropdown-item" href="living&dining.html">Living & Dining</a></li>
+                            <li><a class="dropdown-item" href="kidsroom.html">Kids Room</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="Customize.html">Customization</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about us.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <form id="searchForm" class="d-none d-lg-flex me-3"
+                        onsubmit="event.preventDefault(); searchProducts();">
+                        <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" />
+                        <button class="btn btn-outline-dark" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+
+                    <button id="searchToggle" class="btn btn-outline-dark d-lg-none me-2" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <a href="login.html" class="btn btn-outline-dark me-2 d-none d-lg-block"><i
+                            class="fas fa-user"></i></a>
+                    <button class="btn btn-outline-dark position-relative" id="viewCartBtn" data-bs-toggle="modal"
+                        data-bs-target="#cartModal">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark"
+                            id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <!-- Offcanvas Menu -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+
+                <!-- Search Form (Mobile - Inside Offcanvas) -->
+                <form id="offcanvasSearchForm" class="d-flex mb-3" onsubmit="event.preventDefault(); searchProducts();">
+                    <input id="offcanvasSearchInput" class="form-control me-2" type="search" placeholder="Search" />
+                    <button class="btn btn-outline-dark" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+
+                <!-- Navigation Links -->
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="index.html">Home</a></li>
+                    <li class="list-group-item dropdown">
+                        <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">Furniture</a>
+                        <ul class="dropdown-menu border-0 shadow-none">
+                            <li><a class="dropdown-item" href="bedroom.html">Bed Room</a></li>
+                            <li><a class="dropdown-item" href="office1.html">Office Room</a></li>
+                            <li><a class="dropdown-item" href="living&dining.html">Living & Dining</a></li>
+                            <li><a class="dropdown-item" href="kidsroom.html">Kids Room</a></li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item"><a href="Customize.html">Customization</a></li>
+                    <li class="list-group-item"><a href="about us.html">About Us</a></li>
+                    <li class="list-group-item"><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="hero-section"
+        style="background-image: url('https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Office Furnishings</h1>
+            <p>DESIGN YOUR SPACE, DEFINE YOUR SUCCESS.</p>
+        </div>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+
+    <a href="https://wa.me/923303685944" target="_blank" class="whatsapp-float" title="Chat with us on WhatsApp">
+        <i class="fab fa-whatsapp whatsapp-icon"></i>
+    </a>
+
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel"><i class="fas fa-shopping-cart"></i> Your Cart</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div id="cartItemsContainer">
+                                <p class="text-center">Your cart is empty.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div>
+                                    <button class="btn btn-danger" id="cancelOrderBtn">Cancel Order</button>
+                                </div>
+                                <div class="text-end">
+                                    <div>Subtotal: <strong>PKR <span id="subtotal">0</span></strong></div>
+                                    <div>Discount: <strong>- PKR <span id="discountAmount">0</span></strong></div>
+                                    <div class="h5 mt-2">Total: <strong>PKR <span id="totalPrice">0</span></strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="modal-right">
+                                <h5>Order Details</h5>
+                                <form id="orderForm" onsubmit="event.preventDefault(); submitOrder();">
+                                    <div class="mb-2">
+                                        <label class="form-label small">Name</label>
+                                        <input type="text" id="custName" class="form-control" placeholder="Your Name"
+                                            required>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label small">Phone</label>
+                                        <input type="tel" id="custPhone" class="form-control"
+                                            placeholder="+92xxxxxxxxxx" required>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label small">Address</label>
+                                        <textarea id="custAddress" class="form-control" rows="2"
+                                            placeholder="Delivery address" required></textarea>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label small">Discount code</label>
+                                        <div class="input-group">
+                                            <input type="text" id="discountCode" class="form-control"
+                                                placeholder="e.g. BED10">
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="applyDiscount">Apply</button>
+                                        </div>
+                                        <div class="small text-muted mt-1">Try codes: <strong>BED10</strong> (10%),
+                                            <strong>OFF5</strong> (5%)
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label small">Delivery</label>
+                                        <select id="deliveryMethod" class="form-select">
+                                            <option value="cod" selected>Cash on Delivery</option>
+                                            <option value="pickup">Store Pickup</option>
+                                        </select>
+                                        <div id="deliveryNote" class="small text-muted mt-1">Delivery charges may apply
+                                            on large orders.</div>
+                                    </div>
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-success" id="placeOrderBtn">Place
+                                            Order</button>
+                                        <button type="button" class="btn btn-outline-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="thankYouModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content text-center p-3">
+                <div class="modal-body">
+                    <h4>Thank you!</h4>
+                    <p>Your order has been placed. We'll contact you shortly.</p>
+                    <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="unique-footer">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="footer-heading">Roomify</h5>
+                    <p class="text-white-50">
+                        Crafting spaces that feel like home. Where exceptional design meets lasting comfort.
+                    </p>
+                    <div class="social-icons mt-3">
+                        <a href="https://www.facebook.com/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://wa.me/923303685944" target="_blank" aria-label="WhatsApp"><i
+                                class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="row justify-content-between">
+                        <div class="col-lg-6 mb-4 mb-lg-0">
+                            <h5 class="footer-heading">Join Our Newsletter</h5>
+                            <p class="text-white-50 small">Stay up to date with new collections and exclusive offers.
+                            </p>
+                            <form id="newsletterForm" class="d-flex newsletter-form">
+                                <input type="email" id="newsletterEmail" class="form-control me-2"
+                                    placeholder="Enter your email" required>
+                                <button type="submit" class="btn btn-subscribe">Subscribe</button>
+                            </form>
+                            <div id="newsletterMessage" class="newsletter-message text-success d-none">
+                                Thank you for subscribing!
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-6 mb-4 mb-lg-0">
+                            <h5 class="footer-heading">Explore</h5>
+                            <ul class="list-unstyled footer-links">
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="about us.html">About Us</a></li>
+
+                                <li><a href="Customize.html">Customization</a></li>
+                                <li><a href="contact.html">Contact Us</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <h5 class="footer-heading">Contact</h5>
+                            <ul class="list-unstyled footer-links">
+                                <li><a href="tel:+923303685944"><i class="fas fa-phone-alt me-2"></i>+92 330 3685944</a>
+                                </li>
+                                <li><a href="mailto:roomify@gmail.com"><i
+                                            class="fas fa-envelope me-2"></i>roomify@gmail.com</a></li>
+                                <li><i class="fas fa-map-marker-alt me-2"></i>Lahore, Pakistan</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-hr">
+            <div class="text-center text-white-50 small mt-3">
+                &copy; 2025 Roomify. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+    <script>
+        const products = [
+            { id: 1, name: "Executive Desk", price: 39999, img: "executive desk (2).PNG", backImg: "executive desk (1).PNG" },
+            { id: 2, name: "Ergonomic Office Chair", price: 40499, img: "Ergonomic Office Chair (1).PNG", backImg: "Ergonomic Office Chair (2).PNG" },
+            { id: 3, name: "Computer Desk", price: 29999, img: "computer desk (1).PNG", backImg: "computer desk (2).PNG" },
+            { id: 4, name: "Cabinets", price: 18499, img: "cabinets (1).PNG", backImg: "cabinets (2).PNG" },
+            { id: 5, name: "Office Bookshelves", price: 24999, img: "bookshelf (1).PNG", backImg: "bookshelf (2).PNG" },
+            { id: 6, name: "Conference Table", price: 79999, img: "conference table (1).PNG", backImg: "conference table (2).PNG" },
+            { id: 7, name: "Adjustable Standing Desk", price: 49999, img: "adjustable desk (2).PNG", backImg: "adjustable desk (1).PNG" },
+            { id: 8, name: "Office Lounge Chair", price: 22999, img: "Office Lounge Chair (1).PNG", backImg: "Office Lounge Chair (2).PNG" },
+            { id: 9, name: "Drawers", price: 20999, img: "drawers (1).PNG", backImg: "drawers (2).jpg" }
+        ];
+
+        let cart = [];
+        let appliedDiscount = { code: null, percent: 0 };
+        const productGrid = document.getElementById('productGrid');
+        const cartCountEl = document.getElementById('cartCount');
+        const cartModalElm = new bootstrap.Modal(document.getElementById('cartModal'));
+        const thankYouModalElm = new bootstrap.Modal(document.getElementById('thankYouModal'));
+        const cartItemsContainer = document.getElementById('cartItemsContainer');
+        const subtotalEl = document.getElementById('subtotal');
+        const discountAmountEl = document.getElementById('discountAmount');
+        const totalPriceEl = document.getElementById('totalPrice');
+        const searchInput = document.getElementById('searchInput');
+
+        function formatPKR(n) { return n.toLocaleString('en-PK'); }
+
+        function displayProducts(list) {
+            productGrid.innerHTML = '';
+            list.forEach((p, idx) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+            <div class="card-inner">
+              <div class="card-front"><img src="${p.img}" alt="${p.name}"></div>
+              <div class="card-back"><img src="${p.backImg}" alt="${p.name}"></div>
+            </div>
+            <h3>${p.name}</h3>
+            <p>PKR ${formatPKR(p.price)}</p>
+            <button class="add-btn" data-index="${idx}">Add to Cart</button>
+          `;
+                productGrid.appendChild(card);
+                card.querySelector('.add-btn').addEventListener('click', () => {
+                    addToCart(p.id);
+                    updateCartDisplay();
+                    cartModalElm.show();
+                });
+            });
+        }
+        displayProducts(products);
+
+        function addToCart(productId) {
+            const existing = cart.find(i => i.productId === productId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ productId, qty: 1 });
+            }
+            updateCartCount();
+        }
+
+        function updateCartCount() { cartCountEl.textContent = cart.reduce((s, i) => s + i.qty, 0); }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.productId !== productId);
+            updateCartDisplay();
+        }
+
+        function changeQty(productId, delta) {
+            const item = cart.find(i => i.productId === productId);
+            if (!item) return;
+            item.qty = Math.max(1, item.qty + delta);
+            updateCartDisplay();
+        }
+
+        function computeTotals() {
+            let subtotal = 0;
+            cart.forEach(ci => {
+                const p = products.find(pt => pt.id === ci.productId);
+                subtotal += p.price * ci.qty;
+            });
+            const discountValue = Math.round(subtotal * (appliedDiscount.percent / 100));
+            const total = subtotal - discountValue;
+            return { subtotal, discountValue, total };
+        }
+
+        function updateCartDisplay() {
+            cartItemsContainer.innerHTML = '';
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-center text-muted">Your cart is empty.</p>';
+            } else {
+                cart.forEach(ci => {
+                    const p = products.find(pt => pt.id === ci.productId);
+                    const row = document.createElement('div');
+                    row.className = 'cart-row';
+
+                    row.innerHTML = `
+              <img src="${p.img}" alt="${p.name}">
+              <div class="cart-name">${p.name}</div>
+              <div class="cart-price">PKR ${formatPKR(p.price)}</div>
+              <div class="qty-controls">
+                <button class="btn-decrease" title="Decrease">-</button>
+                <div class="px-2">${ci.qty}</div>
+                <button class="btn-increase" title="Increase">+</button>
+              </div>
+              <div class="line-subtotal">PKR ${formatPKR(p.price * ci.qty)}</div>
+              <div><button class="btn btn-light btn-sm remove-item" title="Remove">x</button></div>
+            `;
+                    row.querySelector('.btn-decrease').addEventListener('click', () => changeQty(ci.productId, -1));
+                    row.querySelector('.btn-increase').addEventListener('click', () => changeQty(ci.productId, +1));
+                    row.querySelector('.remove-item').addEventListener('click', () => removeFromCart(ci.productId));
+                    cartItemsContainer.appendChild(row);
+                });
+            }
+            const { subtotal, discountValue, total } = computeTotals();
+            subtotalEl.textContent = formatPKR(subtotal);
+            discountAmountEl.textContent = formatPKR(discountValue);
+            totalPriceEl.textContent = formatPKR(total);
+            updateCartCount();
+        }
+
+        document.getElementById('viewCartBtn').addEventListener('click', () => {
+            updateCartDisplay();
+            cartModalElm.show();
+        });
+
+        document.getElementById('cancelOrderBtn').addEventListener('click', () => {
+            if (!confirm('Are you sure you want to cancel and empty the cart?')) return;
+            cart = [];
+            appliedDiscount = { code: null, percent: 0 };
+            document.getElementById('discountCode').value = '';
+            updateCartDisplay();
+            cartModalElm.hide();
+        });
+
+        document.getElementById('applyDiscount').addEventListener('click', () => {
+            const code = document.getElementById('discountCode').value.trim().toUpperCase();
+            if (!code) { alert('Please enter a discount code.'); return; }
+            const codes = { 'BED10': 10, 'OFF5': 5 };
+            if (codes[code]) {
+                appliedDiscount = { code, percent: codes[code] };
+                updateCartDisplay();
+                alert('Discount applied: ' + appliedDiscount.percent + '%');
+            } else {
+                appliedDiscount = { code: null, percent: 0 };
+                updateCartDisplay();
+                alert('Invalid code.');
+            }
+        });
+
+        function submitOrder() {
+            if (cart.length === 0) {
+                alert('Your cart is empty.');
+                return;
+            }
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+            if (!name || !phone || !address) {
+                alert('Please fill name, phone and address.');
+                return;
+            }
+            cart = [];
+            appliedDiscount = { code: null, percent: 0 };
+            document.getElementById('discountCode').value = '';
+            updateCartDisplay();
+            cartModalElm.hide();
+            thankYouModalElm.show();
+        }
+
+        function searchProducts() {
+            const q = searchInput.value.trim().toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(q));
+            displayProducts(filtered);
+        }
+
+        function searchProducts() {
+            // Desktop aur Offcanvas dono inputs check karo
+            const desktopInput = document.getElementById("searchInput");
+            const offcanvasInput = document.getElementById("offcanvasSearchInput");
+
+            // Agar desktop input exist karta hai to uska value lo
+            const desktopQuery = desktopInput ? desktopInput.value.trim().toLowerCase() : "";
+
+            // Agar offcanvas input exist karta hai to uska value lo
+            const offcanvasQuery = offcanvasInput ? offcanvasInput.value.trim().toLowerCase() : "";
+
+            // Priority: pehle desktop input, agar empty hai to offcanvas
+            const q = desktopQuery || offcanvasQuery;
+
+            // Agar empty query hai to saare products dikhao
+            if (!q) {
+                displayProducts(products);
+                return;
+            }
+
+            // Filtered results
+            const filtered = products.filter(p => p.name.toLowerCase().includes(q));
+            displayProducts(filtered);
+
+            // Offcanvas search ke baad offcanvas close bhi ho jaye
+            const offcanvasEl = document.getElementById('offcanvasNavbar');
+            if (offcanvasEl && offcanvasEl.classList.contains('show')) {
+                const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
+                if (offcanvas) offcanvas.hide();
+            }
+        }
+
+        searchInput.addEventListener('input', searchProducts);
+
+        document.getElementById('newsletterForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const emailInput = document.getElementById('newsletterEmail');
+            const messageDiv = document.getElementById('newsletterMessage');
+            if (emailInput.checkValidity()) {
+                messageDiv.classList.remove('d-none');
+                emailInput.value = '';
+                setTimeout(() => {
+                    messageDiv.classList.add('d-none');
+                }, 5000);
+            }
+        });
+
+        updateCartDisplay();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Roomify - Login & Signup</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="icon" href="favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+  <style>
+    /* Define custom properties for colors */
+    :root {
+      --primary-color: #171717; /* A dark color for the footer and top bar */
+      --secondary-color: #f0f0f0;
+      --text-color: #333;
+      --light-color: #fff; /* White color for text on dark backgrounds */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: url('1login.jpg') no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .top-bar {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            min-height: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .scrolling-text {
+            display: inline-block;
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: slide-left 15s linear infinite;
+        }
+
+        @keyframes slide-left {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .navbar {
+            background-color: var(--light-color);
+        }
+
+        .navbar-brand img {
+            height: 59px;
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .navbar .btn-outline-dark {
+            border-color: transparent;
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+        }
+
+        .navbar .btn-outline-dark:hover {
+            color: #888;
+        }
+
+        .offcanvas-body {
+            color: var(--primary-color);
+            padding: 20px;
+        }
+
+        .offcanvas-body .list-group-item {
+            border: none;
+            background-color: transparent;
+            font-weight: 500;
+            padding: 10px 0;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .offcanvas-body .list-group-item a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+    /* Form container */
+    .form-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 15px;
+    }
+
+    .glass-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(61, 38, 43, 0.831);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      width: 450px;
+      color: rgb(7, 10, 0);
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .glass-box input[type="text"],
+    .glass-box input[type="email"],
+    .glass-box input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      outline: none;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      transition: background 0.3s;
+    }
+
+    .glass-box input::placeholder {
+      color: rgba(9, 9, 9, 0.7);
+      transition: color 0.3s ease;
+    }
+
+    .glass-box input:hover::placeholder {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .glass-box input:focus::placeholder {
+      color: rgba(102, 99, 122, 0.3);
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+
+    .options label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .glass-btn {
+      background: rgba(102, 99, 122, 0.3);
+      border: none;
+      padding: 10px;
+      border-radius: 25px;
+      cursor: pointer;
+      color: white;
+      width: 100%;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .glass-btn:hover {
+      background: #fa7861;
+      color: black;
+    }
+
+    .switch-link {
+      margin-top: 15px;
+      font-size: 12px;
+    }
+
+    .switch-link a {
+      color: #fff;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 28px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #1da851;
+            color: white;
+        }
+
+        .whatsapp-icon {
+            margin: 0;
+        }
+        
+    .social-btn {
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      padding: 10px;
+      border-radius: 25px;
+      cursor: pointer;
+      color: white;
+      width: 100%;
+      font-size: 16px;
+      transition: 0.3s;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .social-btn:hover {
+      background: rgba(55, 14, 1, 0.5);
+    }
+
+    .social-btn.google i {
+      color: #db4437;
+    }
+
+    .social-btn.facebook i {
+      color: #3b5998;
+    }
+
+    .social-btn.instagram i {
+      color: #e1306c;
+    }
+
+    /* Footer */
+    .unique-footer {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      padding: 60px 0 20px;
+    }
+
+    .unique-footer h5.footer-heading {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--light-color);
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .unique-footer h5.footer-heading::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 2px;
+      background-color: var(--light-color);
+    }
+
+    .unique-footer .text-white-50 {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .unique-footer .social-icons a {
+      color: var(--light-color);
+      font-size: 1.25rem;
+      margin-right: 15px;
+      transition: color 0.3s ease;
+    }
+
+    .unique-footer .social-icons a:hover {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .unique-footer .newsletter-form .form-control {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--light-color);
+    }
+
+    .unique-footer .newsletter-form .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .unique-footer .btn-subscribe {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+      border-radius: 5px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .unique-footer .btn-subscribe:hover {
+      background-color: #ddd;
+    }
+
+    .unique-footer .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      display: block;
+      padding: 5px 0;
+    }
+
+    .unique-footer .footer-links a:hover {
+      color: var(--light-color);
+    }
+
+    .unique-footer .footer-hr {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+    .newsletter-message {
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .team-cards {
+        flex-direction: column;
+        align-items: center;
+      }
+      .footer-container {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+    .unique-footer .footer-links i {
+            width: 15px;
+            text-align: center;
+        }
+
+        .unique-footer .footer-links li {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 8px;
+            white-space: nowrap;
+        }
+  </style>
+</head>
+<body>
+
+  <header class="sticky-top bg-white shadow-sm">
+    <div class="top-bar text-white py-2 text-center small">
+        <div class="scrolling-text">
+            Delivery All Over Pakistan | Free Shipping on Orders Above PKR 100,000
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-lg py-3">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <button class="navbar-toggler me-3" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand mx-auto me-lg-0" href="index.html">
+                <h5 class="footer-heading">Roomify</h5>
+            </a>
+            <ul class="navbar-nav d-none d-lg-flex flex-grow-1 justify-content-center">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Furniture</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="bedroom.html">Bed Room</a></li>
+                        <li><a class="dropdown-item" href="office1.html">Office Room</a></li>
+                        <li><a class="dropdown-item" href="living&dining.html">Living & Dining</a></li>
+                        <li><a class="dropdown-item" href="kidsroom.html">Kids Room</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item"><a class="nav-link" href="Customize.html">Customization</a></li>
+                <li class="nav-item"><a class="nav-link" href="about us.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+            </ul>
+            <div class="d-flex align-items-center">
+                <a href="#" class="btn btn-outline-dark me-2"><i class="fas fa-search"></i></a>
+                <a href="login.html" class="btn btn-outline-dark me-2 d-none d-lg-block"><i
+                        class="fas fa-user"></i></a>
+                <a href="#" class="btn btn-outline-dark position-relative">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+        aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="index.html">Home</a></li>
+                <li class="list-group-item dropdown">
+                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">Furniture</a>
+                    <ul class="dropdown-menu border-0 shadow-none">
+                        <li><a class="dropdown-item" href="bedroom.html">Bed Room</a></li>
+                        <li><a class="dropdown-item" href="office1.html">Office Room</a></li>
+                        <li><a class="dropdown-item" href="living&dining.html">Living & Dining</a></li>
+                        <li><a class="dropdown-item" href="kidsroom.html">Kids Room</a></li>
+                    </ul>
+                </li>
+                <li class="list-group-item"><a href="Customize.html">Customization</a></li>
+                <li class="list-group-item"><a href="about us.html">About Us</a></li>
+                <li class="list-group-item"><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<div class="form-wrapper">
+  <div class="glass-box" id="loginBox">
+    <h2>Welcome Back</h2>
+    <input type="text" id="loginUsername" placeholder="Username">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <div class="options">
+      <label><input type="checkbox"> Remember me</label>
+      <a onclick="showForgot()" style="color:rgb(254, 84, 6);cursor:pointer;">Forgot?</a>
+    </div>
+    <button class="glass-btn" type="button" onclick="loginUser()">Login</button>
+    <div class="switch-link">
+      Don't have an account? <a onclick="showSignup()">Sign Up</a>
+    </div>
+  </div>
+
+  <div class="glass-box" id="signupBox" style="display:none;">
+    <h2>Sign Up</h2>
+    <input type="text" id="signupName" placeholder="Full Name">
+    <input type="email" id="signupEmail" placeholder="Email Address">
+    <input type="password" id="signupPassword" placeholder="Password">
+    <input type="password" id="signupConfirm" placeholder="Confirm Password">
+    <button class="glass-btn" type="button" onclick="signupUser()">Create Account</button>
+    <div class="switch-link">
+      Already have an account? <a onclick="showLogin()">Login</a>
+    </div>
+    <div class="social-login">
+      <a href="https://accounts.google.com/signin" target="_blank" class="social-btn google"><i class="fab fa-google"></i> Sign up with Google</a>
+      <a href="https://www.facebook.com/login" target="_blank" class="social-btn facebook"><i class="fab fa-facebook-f"></i> Sign up with Facebook</a>
+      <a href="https://www.instagram.com/accounts/login" target="_blank" class="social-btn instagram"><i class="fab fa-instagram"></i> Sign up with Instagram</a>
+    </div>
+  </div>
+
+  <div class="glass-box" id="forgotBox" style="display:none;">
+    <h2>Reset Password</h2>
+    <p style="font-size:14px;color:white;">Enter your registered email to reset your password.</p>
+    <input type="email" id="forgotEmail" placeholder="Email Address">
+    <button class="glass-btn" type="button" onclick="forgotPassword()">Send Reset Link</button>
+    <div class="switch-link">
+      Remembered your password? <a onclick="showLogin()">Login</a>
+    </div>
+  </div>
+</div>
+
+<a href="https://wa.me/923303685944" target="_blank" class="whatsapp-float">
+  <i class="fab fa-whatsapp"></i>
+</a>
+<footer class="unique-footer">
+  <div class="container py-5">
+    <div class="row g-5">
+        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+          <h5 class="footer-heading">Roomify</h5>
+        <p class="text-white-50">
+          Crafting spaces that feel like home. Where exceptional design meets lasting comfort.
+        </p>
+        <div class="social-icons mt-3">
+          <a href="https://www.facebook.com/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="https://wa.me/923303685944" target="_blank" aria-label="WhatsApp"><i
+              class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <div class="row justify-content-between">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <h5 class="footer-heading">Join Our Newsletter</h5>
+            <p class="text-white-50 small">Stay up to date with new collections and exclusive offers.</p>
+            <form id="newsletterForm" class="d-flex newsletter-form">
+              <input type="email" id="newsletterEmail" class="form-control me-2"
+                placeholder="Enter your email" required>
+              <button type="submit" class="btn btn-subscribe">Subscribe</button>
+            </form>
+            <div id="newsletterMessage" class="newsletter-message text-success d-none">
+              Thank you for subscribing!
+            </div>
+          </div>
+          <div class="col-lg-3 col-6 mb-4 mb-lg-0">
+            <h5 class="footer-heading">Explore</h5>
+            <ul class="list-unstyled footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about us.html">About Us</a></li>
+              <li><a href="Customize.html">Customization</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-6">
+            <h5 class="footer-heading">Contact</h5>
+            <ul class="list-unstyled footer-links">
+              <li><a href="tel:+923303685944"><i class="fas fa-phone-alt me-2"></i>+92 330 3685944</a>
+              </li>
+              <li><a href="mailto:roomify@gmail.com"><i
+                    class="fas fa-envelope me-2"></i>roomify@gmail.com</a></li>
+              <li><i class="fas fa-map-marker-alt me-2"></i>Lahore, Pakistan</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-hr">
+    <div class="text-center text-white-50 small mt-3">
+      &copy; 2025 Roomify. All Rights Reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+  function showSignup() {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("signupBox").style.display = "block";
+    document.getElementById("forgotBox").style.display = "none";
+  }
+  function showLogin() {
+    document.getElementById("signupBox").style.display = "none";
+    document.getElementById("loginBox").style.display = "block";
+    document.getElementById("forgotBox").style.display = "none";
+  }
+  function showForgot() {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("signupBox").style.display = "none";
+    document.getElementById("forgotBox").style.display = "block";
+  }
+  function loginUser() {
+    let username = document.getElementById("loginUsername").value;
+    let password = document.getElementById("loginPassword").value;
+    if (username && password) {
+      alert(`Welcome back, ${username}! (Front-end only)`);
+    } else {
+      alert("Please enter username and password.");
+    }
+  }
+  function signupUser() {
+    let name = document.getElementById("signupName").value;
+    let email = document.getElementById("signupEmail").value;
+    let pass = document.getElementById("signupPassword").value;
+    let confirm = document.getElementById("signupConfirm").value;
+    if (!name || !email || !pass || !confirm) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    if (pass !== confirm) {
+      alert("Passwords do not match!");
+      return;
+    }
+    alert(`Account created for ${name}! (Front-end only)`);
+    showLogin();
+  }
+  function forgotPassword() {
+    let email = document.getElementById("forgotEmail").value;
+    if (email) {
+      alert(`If this email is registered, a reset link will be sent to ${email}. (Front-end only)`);
+      showLogin();
+    } else {
+      alert("Please enter your email.");
+    }
+  }
+</script>
+
+</body>
+</html>
