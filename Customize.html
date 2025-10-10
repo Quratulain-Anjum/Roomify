@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roomify - 3D Furniture Order</title>
+
+  <!-- Bootstrap & Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="icon" href="favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+
+  <!-- model-viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('aboutus (2).jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      color: #333;
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+    }
+
+    :root {
+      --primary-color: #171717;
+      --secondary-color: #f0f0f0;
+      --text-color: #333;
+      --light-color: #fff;
+    }
+
+    .top-bar {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      min-height: 40px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .scrolling-text {
+      display: inline-block;
+      white-space: nowrap;
+      padding-left: 100%;
+      animation: slide-left 15s linear infinite;
+    }
+
+    @keyframes slide-left {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    .navbar {
+      background-color: var(--light-color);
+    }
+
+    .navbar-brand img {
+      height: 59px;
+    }
+
+    .navbar-nav .nav-link {
+      color: var(--text-color);
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: var(--primary-color);
+    }
+
+    .navbar .btn-outline-dark {
+      border-color: transparent;
+      color: var(--primary-color);
+      transition: color 0.3s ease;
+    }
+
+    .navbar .btn-outline-dark:hover {
+      color: #888;
+    }
+
+    .offcanvas-body {
+      color: var(--primary-color);
+      padding: 20px;
+    }
+
+    .offcanvas-body .list-group-item {
+      border: none;
+      background-color: transparent;
+      font-weight: 500;
+      padding: 10px 0;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+    }
+
+    .offcanvas-body .list-group-item a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 28px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+
+    .whatsapp-float:hover {
+      background-color: #1da851;
+      color: white;
+    }
+
+    .whatsapp-icon {
+      margin: 0;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 400px;
+      background-color: #d4d3d3;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .color-options {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+
+    }
+
+    .color-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #fff;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    }
+
+    label[for="furnitureSelect"] {
+      font-size: 18px;
+      color: #f8faf6;
+      margin-bottom: 8px;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+
+    }
+
+    #furnitureSelect {
+      width: 200px;
+      padding: 15px 40px;
+      font-size: 1rem;
+      border-radius: 20px;
+      border: 2px solid #292727;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      text-align: center;
+      color: #111;
+    }
+
+    .order-form {
+      max-width: 550px;
+      margin: 0 auto 50px;
+      background: #ffffffdd;
+      padding: 32px 28px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      color: #333;
+      font-family: 'Poppins', sans-serif;
+      backdrop-filter: blur(5px);
+    }
+
+    .order-form h4 {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .order-form .form-label {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .order-form .form-control {
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      padding: 10px 14px;
+      font-size: 15px;
+      transition: border-color 0.3s;
+    }
+
+    .order-form .form-control:focus {
+      border-color: #111;
+      box-shadow: 0 0 0 0.15rem rgba(26, 120, 110, 0.25);
+    }
+
+    .btn.btn-success.w-100 {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .btn.btn-success.w-100:hover {
+      background-color: #555;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+
+
+    .unique-footer {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      padding: 60px 0 20px;
+    }
+
+    .unique-footer h5.footer-heading {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--light-color);
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .unique-footer h5.footer-heading::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 2px;
+      background-color: var(--light-color);
+    }
+
+    .unique-footer .text-white-50 {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .unique-footer .social-icons a {
+      color: var(--light-color);
+      font-size: 1.25rem;
+      margin-right: 15px;
+      transition: color 0.3s ease;
+    }
+
+    .unique-footer .social-icons a:hover {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .unique-footer .newsletter-form .form-control {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--light-color);
+    }
+
+    .unique-footer .newsletter-form .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .unique-footer .btn-subscribe {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+      border-radius: 5px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .unique-footer .btn-subscribe:hover {
+      background-color: #ddd;
+    }
+
+    .unique-footer .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      display: block;
+      padding: 5px 0;
+    }
+
+    .unique-footer .footer-links a:hover {
+      color: var(--light-color);
+    }
+
+    .unique-footer .footer-hr {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+    .newsletter-message {
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    .unique-footer .footer-links i {
+      width: 15px;
+      text-align: center;
+    }
+
+    .unique-footer .footer-links li {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 8px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="sticky-top bg-white shadow-sm">
+    <div class="top-bar text-white py-2 text-center small">
+      <div class="scrolling-text">
+        Delivery All Over Pakistan | Free Shipping on Orders Above PKR 100,000
+      </div>
+    </div>
+    <nav class="navbar navbar-expand-lg py-3">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        <button class="navbar-toggler me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand mx-auto me-lg-0" href="index.html">
+          <h5 class="footer-heading">Roomify</h5>
+        </a>
+        <ul class="navbar-nav d-none d-lg-flex flex-grow-1 justify-content-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Furniture</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="bedroom.html">Bed Room</a></li>
+              <li><a class="dropdown-item" href="office1.html">Office Room</a></li>
+              <li><a class="dropdown-item" href="living&dining.html">Living & Dining</a></li>
+              <li><a class="dropdown-item" href="kidsroom.html">Kids Room</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link" href="Customize.html">Customization</a></li>
+          <li class="nav-item"><a class="nav-link" href="about us.html">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <a href="#" class="btn btn-outline-dark me-2"><i class="fas fa-search"></i></a>
+          <a href="login.html" class="btn btn-outline-dark me-2 d-none d-lg-block"><i class="fas fa-user"></i></a>
+          <a href="#" class="btn btn-outline-dark position-relative">
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+        </div>
+      </div>
+    </nav>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="index.html">Home</a></li>
+          <li class="list-group-item dropdown">
+            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Furniture</a>
+            <ul class="dropdown-menu border-0 shadow-none">
+              <li><a class="dropdown-item" href="bedroom.html">Bed Room</a></li>
+              <li><a class="dropdown-item" href="office1.html">Office Room</a></li>
+              <li><a class="dropdown-item" href="living&dining.html">Living & Dining</a></li>
+              <li><a class="dropdown-item" href="kidsroom.html">Kids Room</a></li>
+            </ul>
+          </li>
+          <li class="list-group-item"><a href="Customize.html">Customization</a></li>
+          <li class="list-group-item"><a href="about us.html">About Us</a></li>
+          <li class="list-group-item"><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <!-- WhatsApp Chat Button -->
+  <a href="https://wa.me/923303685944" target="_blank" class="whatsapp-float" title="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp whatsapp-icon"></i>
+  </a>
+
+
+  <!-- Main Section -->
+  <div class="container mt-5">
+    <h2 class="text-center mb-4" style="color: #000000;">Customize Your Furniture in 3D</h2>
+
+    <!-- Furniture Selection -->
+    <div class="text-center mb-4">
+      <label for="furnitureSelect" class="form-label fw-bold">Choose Furniture:</label>
+      <select id="furnitureSelect" class="form-select w-auto mx-auto">
+        <option value="couch">Couch</option>
+        <option value="table">Table</option>
+        <option value="bed"> Bed</option>
+        <option value="dresser">Dresser</option>
+        <option value="lamp"> Lamp</option>
+        <option value="chair">Chair</option>
+      </select>
+    </div>
+
+    <!-- 3D Viewer -->
+    <model-viewer id="furnitureModel" src="Modern Full Couch 3D.glb" alt="3D Furniture" auto-rotate
+      camera-controls ar exposure="1" environment-image="neutral" tone-mapping="neutral" shadow-intensity="1">
+    </model-viewer>
+    <br>
+    <!-- Color Picker -->
+    <h3 class="text-center">Select Color:</h3>
+
+    <div class="color-options">
+      <div class="color-box" style="background:#8B4513;" data-color="#8B4513"></div>
+      <div class="color-box" style="background:#000000;" data-color="#000000"></div>
+      <div class="color-box" style="background:#ffffff;" data-color="#ffffff"></div>
+      <div class="color-box" style="background:#b22222;" data-color="#b22222"></div>
+      <div class="color-box" style="background:#1a786e;" data-color="#1a786e"></div>
+      <div class="color-box" style="background:#808080;" data-color="#808080"></div>
+
+      <div class="color-box" style="background:#C0C999;" data-color="#C0C999"></div>
+      <div class="color-box" style="background:#FD96A9;" data-color="#FD96A9"></div>
+      <div class="color-box" style="background:#B30089;" data-color="#B30089"></div>
+      <div class="color-box" style="background:#6B2B06;" data-color="#6B2B06"></div>
+      <div class="color-box" style="background:#BCF4DE;" data-color="#BCF4DE"></div>
+      <div class="color-box" style="background:#DED6D1;" data-color="#DED6D1"></div>
+
+      <div class="color-box" style="background:#6F5060;" data-color="#6F5060"></div>
+      <div class="color-box" style="background:#FFDD4A;" data-color="#FFDD4A"></div>
+      <div class="color-box" style="background:#C7D9B7;" data-color="#C7D9B7"></div>
+    </div>
+    <br><br>
+    <!-- Order Form -->
+    <div class="order-form">
+      <h4 class="mb-3 text-center">Place Your Order</h4>
+      <form id="orderForm">
+        <div class="mb-3"><label class="form-label">Full Name</label><input type="text" placeholder="Full Name"
+            class="form-control" required></div>
+        <div class="mb-3"><label class="form-label">Email</label><input type="email" placeholder="Email Address"
+            class="form-control" required></div>
+        <div class="mb-3"><label class="form-label">Phone</label><input type="tel" placeholder="Phone Number"
+            class="form-control" required></div>
+        <div class="mb-3"><label class="form-label">Selected Color</label><input type="text" class="form-control"
+            id="selectedColorInput" readonly></div>
+        <div class="mb-3"><label class="form-label">Furniture</label><input type="text" class="form-control"
+            id="selectedFurnitureInput" readonly></div>
+        <br>
+        <button type="submit" class="btn btn-success w-100">Place Order</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const modelViewer = document.getElementById('furnitureModel');
+    const furnitureSelect = document.getElementById('furnitureSelect');
+    const selectedColorInput = document.getElementById('selectedColorInput');
+    const selectedFurnitureInput = document.getElementById('selectedFurnitureInput');
+    let selectedColor = '#8B4513';
+    let selectedFurniture = 'Couch';
+
+    const furnitureModels = {
+      couch: 'Modern Full Couch.glb',
+      table: 'dining.glb',
+      bed: 'Wooden Bed.glb',
+      dresser: 'Dresser.glb',
+      lamp: 'Table Lamp.glb',
+      chair: 'Rocking Chair.glb'
+    };
+
+    selectedColorInput.value = selectedColor;
+    selectedFurnitureInput.value = selectedFurniture;
+
+    furnitureSelect.addEventListener('change', function () {
+      const value = this.value;
+      selectedFurniture = value.charAt(0).toUpperCase() + value.slice(1);
+      modelViewer.src = furnitureModels[value];
+      selectedFurnitureInput.value = selectedFurniture;
+      applyColor(selectedColor);
+    });
+
+    function hexToRgbArray(hex) {
+      const bigint = parseInt(hex.replace("#", ""), 16);
+      return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+    }
+
+    async function applyColor(hex) {
+      await modelViewer.updateComplete;
+      const rgb = hexToRgbArray(hex).map(v => v / 255);
+      const materials = modelViewer.model?.materials;
+      if (materials) {
+        materials.forEach(material => {
+          if (material.pbrMetallicRoughness) {
+            material.pbrMetallicRoughness.setBaseColorFactor([...rgb, 1]);
+          }
+        });
+      }
+    }
+
+    document.querySelectorAll('.color-box').forEach(box => {
+      box.addEventListener('click', () => {
+        selectedColor = box.dataset.color;
+        selectedColorInput.value = selectedColor;
+        applyColor(selectedColor);
+      });
+    });
+
+    modelViewer.addEventListener("load", () => {
+      applyColor(selectedColor);
+    });
+
+    document.getElementById('orderForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert("✅ Order Placed!\nFurniture: " + selectedFurniture + "\nColor: " + selectedColor);
+      this.reset();
+      selectedColorInput.value = selectedColor;
+      selectedFurnitureInput.value = selectedFurniture;
+    });
+  </script>
+  <footer class="unique-footer">
+    <div class="container py-5">
+      <div class="row g-5">
+        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+          <h5 class="footer-heading">Roomify</h5>
+          <p class="text-white-50">
+            Crafting spaces that feel like home. Where exceptional design meets lasting comfort.
+          </p>
+          <div class="social-icons mt-3">
+            <a href="https://www.facebook.com/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://wa.me/923303685944" target="_blank" aria-label="WhatsApp"><i
+                class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="row justify-content-between">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+              <h5 class="footer-heading">Join Our Newsletter</h5>
+              <p class="text-white-50 small">Stay up to date with new collections and exclusive offers.
+              </p>
+              <form id="newsletterForm" class="d-flex newsletter-form">
+                <input type="email" id="newsletterEmail" class="form-control me-2" placeholder="Enter your email"
+                  required>
+                <button type="submit" class="btn btn-subscribe">Subscribe</button>
+              </form>
+              <div id="newsletterMessage" class="newsletter-message text-success d-none">
+                Thank you for subscribing!
+              </div>
+            </div>
+            <div class="col-lg-3 col-6 mb-4 mb-lg-0">
+              <h5 class="footer-heading">Explore</h5>
+              <ul class="list-unstyled footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about us.html">About Us</a></li>
+
+                <li><a href="Customize.html">Customization</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+              </ul>
+            </div>
+            <div class="col-lg-3 col-6">
+              <h5 class="footer-heading">Contact</h5>
+              <ul class="list-unstyled footer-links">
+                <li><a href="tel:+923303685944"><i class="fas fa-phone-alt me-2"></i>+92 330 3685944</a>
+                </li>
+                <li><a href="mailto:roomify@gmail.com"><i class="fas fa-envelope me-2"></i>roomify@gmail.com</a></li>
+                <li><i class="fas fa-map-marker-alt me-2"></i>Lahore, Pakistan</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-hr">
+      <div class="text-center text-white-50 small mt-3">
+        &copy; 2025 Roomify. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
